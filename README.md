@@ -6,18 +6,20 @@
 * Compilar Lustre en nodo maestro
 
 
-El archivo [run-DHCP-TFTP.sh](run-DHCP-TFTP.sh) contiene las opciones para que dnsmasq atienda la solicitud dhcp y sirva como tftp para la entrega de los archivos necesarios para el arranque del nodo.
+El archivo [setup-DHCP-TFTP.sh](setup-DHCP-TFTP.sh) contiene las opciones para que dnsmasq atienda la solicitud dhcp y sirva como tftp para la entrega de los archivos necesarios para el arranque del nodo.
 
 Uso 
 ~~~bash
 git clone 
 cd debian-cluster
-bash run-DHCP-TFTP.sh  nodo IP MAC
+bash setup-DHCP-TFTP.sh  nodo IP MAC
+bash run-DNSMASQ.sh
 ~~~
 
 
 ### Referencias
 https://www.debian.org/releases/stable/amd64/apb.es.html
-https://www.debian.org/releases/stable/amd64/ch05s03.en.html                                                                                                                 
+https://www.debian.org/releases/stable/amd64/ch05s03.en.html
 https://preseed.debian.net/debian-preseed/bullseye/amd64-main-full.txt
+man  dnsmasq
 
