@@ -32,6 +32,7 @@ d-i partman-auto/choose_recipe select atomic
 d-i partman/choose_partition select finish 
 d-i partman/confirm_nooverwrite boolean true 
 d-i partman/confirm boolean true 
+d-i partman-partitioning/default_label string gpt
 d-i partman-partitioning/confirm_write_new_label boolean true 
 
 d-i passwd/make-user boolean false
@@ -39,12 +40,11 @@ d-i passwd/root-password-crypted password $1$NYS81Pj.$DcB5MMaFjdWpncs9UX9u11
 #d-i openssh-server/password-authentication  boolean true
 #d-i openssh-server/permit-root-login        boolean true
 
-tasksel tasksel/first multiselect ssh-server, standard
+tasksel tasksel/first multiselect ssh-server, standard, desktop
+tasksel tasksel/desktop multiselect  mate  #gnome, kde, xfce, lxde, gnome-flashback, cinnamon, mate, lxqt
 d-i pkgsel/include string nfs-common 
 
 d-i finish-install/reboot_in_progress note 
 popularity-contest popularity-contest/participate boolean false
-
-#d-i preseed/late_command string in-target /usr/bin/busybox tftp 172.17.253.253 -g -r /netboot.post ; in-target /bin/bash /netboot.post ; rm /target/netboot.post  
-
+d-i save-logs/directory     string  /target/root
 
