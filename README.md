@@ -21,4 +21,6 @@ El archivo [run-DHCP-TFTP.sh](run-DHCP-TFTP.sh) contiene las opciones para que d
 
 ### Referencias
 https://www.debian.org/releases/stable/amd64/apb.es.html
+https://www.debian.org/releases/stable/amd64/ch05s03.en.html                                                                                                                 
+https://preseed.debian.net/debian-preseed/bullseye/amd64-main-full.txt
 
