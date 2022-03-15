@@ -79,10 +79,12 @@ echo "
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Ejecutar: 
 
-sudo bash ./run-DNSMASQ.sh 
+bash ./run-DNSMASQ.sh 
 
 y encender nodo en arranque PXE para comenzar instalación 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+
+test ! -e netboot.post && echo "!!!!!!!!! Falta archivo netboot.post !!!!!!!!" 
 
 }
 
