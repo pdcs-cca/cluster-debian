@@ -39,7 +39,7 @@ codename=codename=bullseye
 upgrade=upgrade=full-upgrade #none, safe-upgrade, full-upgrade
 interactive=interactive=false #true, false
 DEBIAN_FRONTEND=DEBIAN_FRONTEND=newt # noninteractive, text, newt, gtk  
-BOOT_DEBUG=BOOT_DEBUG=0 #0, 1, 2, 3 
+BOOT_DEBUG=BOOT_DEBUG=2 #0, 1, 2, 3 
 
 
 echo "default install
@@ -100,7 +100,8 @@ test -z $1  && echo "falta datos del servidor:  node1 172.17.2.1 3c:ec:ef:18:d6:
 test ! -e $BOOT_FILE && echo "falta archivo $BOOT_FILE " && _setup-netboot
 test ! -d pxelinux.cfg && echo "falta directorio pxelinux.cfg" && _setup-netboot
 test ! -d  $PWD/nodes.cfg && mkdir -v $PWD/nodes.cfg
-test ! -d  $PWD/preseed.cfg && mkdir -v $PWD/preseed.cfg && cp default.preseed $PWD/preseed.cfg  
+test ! -d  $PWD/preseed.cfg && mkdir -v $PWD/preseed.cfg 
+cp -v  default.preseed $PWD/preseed.cfg  
 test ! -e $PWD/hosts.dnsmasq && echo "#$(date)" > $PWD/hosts.dnsmasq
 
 _gen-PXE 
