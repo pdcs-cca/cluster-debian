@@ -75,9 +75,14 @@ sudo dnsmasq --leasefile-ro --no-hosts --log-queries --no-daemon --no-resolv --n
 --dhcp-host=$MAC,$NODE_HOSTNAME,$NODE_IP 
 EOF-
 
-echo "Ejecutar 
+echo "
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Ejecutar: 
+
 sudo bash $PWD/run-DNSMASQ.sh 
-y encender nodo en arranque PXE para comenzar instalación "
+
+y encender nodo en arranque PXE para comenzar instalación 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
 
 }
 
