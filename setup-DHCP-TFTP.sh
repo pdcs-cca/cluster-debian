@@ -38,8 +38,8 @@ locale=locale=en_US
 codename=codename=bullseye
 upgrade=upgrade=full-upgrade #none, safe-upgrade, full-upgrade
 interactive=interactive=false #true, false
-DEBIAN_FRONTEND=DEBIAN_FRONTEND=text # noninteractive, text, newt, gtk  
-BOOT_DEBUG=BOOT_DEBUG=3 #0, 1, 2, 3 
+DEBIAN_FRONTEND=DEBIAN_FRONTEND=newt # noninteractive, text, newt, gtk  
+BOOT_DEBUG=BOOT_DEBUG=0 #0, 1, 2, 3 
 
 
 echo "default install
@@ -60,7 +60,7 @@ _run-dnsmasq(){
 
 grep -q $MAC $PWD/hosts.dnsmasq || echo "$MAC,$NODE_HOSTNAME,$NODE_IP,1h" >>  $PWD/hosts.dnsmasq
 
-cat<<'EOF-'> $PWD/run-DNSMASQ.sh 
+cat<<EOF-> $PWD/run-DNSMASQ.sh 
 #!/bin/bash 
 
 sudo pkill dnsmasq
@@ -72,7 +72,7 @@ sudo dnsmasq --leasefile-ro --no-hosts --log-queries --no-daemon --no-resolv --n
 --tftp-root=$NETBOOT_ROOT \
 --dhcp-option=option:router,$NETBOOT_GATEWAY \
 --dhcp-option=option:dns-server,$NETBOOT_DNS \
---dhcp-host=$MAC,$NODE_HOSTNAME,$NODE_IP 
+--dhcp-host=$MAC,$NODE_HOSTNAME,$NODE_IP,1h 
 EOF-
 
 echo "
@@ -91,8 +91,6 @@ local NETBOOT="https://deb.debian.org/debian/dists/bullseye/main/installer-amd64
 test -e $BOOT_FILE && return
 
 echo "Descargando $NETBOOT .." 
-#mkdir netboot
-#cd netboot
 curl -s -L $NETBOOT | tar xzvf -
 }
 
