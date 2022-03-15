@@ -10,7 +10,7 @@ El archivo [setup-DHCP-TFTP.sh](setup-DHCP-TFTP.sh) contiene las opciones para q
 
 Uso 
 ~~~bash
-git clone 
+git clone https://github.com/pdcs-cca/cluster-debian.git  
 cd debian-cluster
 bash setup-DHCP-TFTP.sh  nodo IP MAC
 bash run-DNSMASQ.sh

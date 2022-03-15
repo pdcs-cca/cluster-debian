@@ -88,7 +88,7 @@ test -e $BOOT_FILE && return
 echo "Descargando $NETBOOT .." 
 #mkdir netboot
 #cd netboot
-curl -L $NETBOOT | tar xzvf -
+curl -s -L $NETBOOT | tar xzvf -
 }
 
 test -z $1  && echo "falta datos del servidor:  node1 172.17.2.1 3c:ec:ef:18:d6:aa " && exit
