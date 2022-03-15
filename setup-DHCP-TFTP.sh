@@ -79,7 +79,7 @@ echo "
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Ejecutar: 
 
-sudo bash $PWD/run-DNSMASQ.sh 
+sudo bash ./run-DNSMASQ.sh 
 
 y encender nodo en arranque PXE para comenzar instalación 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
