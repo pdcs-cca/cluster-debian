@@ -41,7 +41,6 @@ d-i passwd/root-password-crypted password $1$NYS81Pj.$DcB5MMaFjdWpncs9UX9u11
 #d-i openssh-server/permit-root-login        boolean true
 
 tasksel tasksel/first multiselect ssh-server, standard
-tasksel tasksel/desktop multiselect  mate  #gnome, kde, xfce, lxde, gnome-flashback, cinnamon, mate, lxqt
 d-i pkgsel/include string nfs-common, vim, git  
 
 d-i finish-install/reboot_in_progress note 
