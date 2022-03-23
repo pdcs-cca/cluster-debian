@@ -41,7 +41,7 @@ d-i passwd/root-password-crypted password $1$NYS81Pj.$DcB5MMaFjdWpncs9UX9u11
 #d-i openssh-server/permit-root-login        boolean true
 
 tasksel tasksel/first multiselect ssh-server, standard
-d-i pkgsel/include string nfs-common, vim, git  
+d-i pkgsel/include string nfs-common, vim, git, csh  
 
 d-i finish-install/reboot_in_progress note 
 popularity-contest popularity-contest/participate boolean false
