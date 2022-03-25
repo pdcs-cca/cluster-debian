@@ -62,7 +62,7 @@ grep -q $MAC $PWD/hosts.dnsmasq || echo "$MAC,$NODE_HOSTNAME,$NODE_IP,1h" >>  $P
 
 cat<<EOF-> $PWD/run-DNSMASQ.sh 
 #!/bin/bash 
-
+#  --dhcp-hostsfile=hosts.dnsmasq
 sudo pkill dnsmasq
 sudo dnsmasq --leasefile-ro --no-hosts --log-queries --no-daemon --no-resolv --no-poll \
 --port=0 --log-dhcp --enable-tftp --tftp-unique-root --dhcp-boot=$BOOT_FILE \
