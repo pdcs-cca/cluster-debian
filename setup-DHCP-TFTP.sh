@@ -86,6 +86,8 @@ y encender nodo en arranque PXE para comenzar instalación
 
 test ! -e netboot.post && echo "!!!!!!!!! Falta archivo netboot.post !!!!!!!!" 
 
+dpkg -l dnsmasq 
+
 }
 
 _setup-netboot(){
