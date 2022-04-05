@@ -82,6 +82,8 @@ Ejecutar:
 bash ./run-DNSMASQ.sh 
 
 y encender nodo en arranque PXE para comenzar instalación 
+
+NETBOOT_SERVER=$NETBOOT_SERVER
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
 
 test ! -e netboot.post && echo "!!!!!!!!! Falta archivo netboot.post !!!!!!!!" 
