@@ -69,7 +69,9 @@ MAC=\$2
 IP=\$3
 NODE=\$4
 
-test x\$METHOD == xadd  && echo \"serial 1 115200 0
+echo $* >> $NETBOOT_ROOT/dnsmasq.cfg/log
+test ! -z \$NODE && INITRD=\$(basename \$NODE)
+test \$INITRD == initrd.gz  && echo \"serial 1 115200 0
 include /nodes.cfg/localboot
 \" >  $NETBOOT_ROOT/pxelinux.cfg/\$NODE 
 
