@@ -1,0 +1,169 @@
+#!/bin/bash 
+
+export DEBIAN_FRONTEND=noninteractive
+
+apt -y install aptitude libfabric1 libdapl2 nginx net-tools time linux-cpupower  \
+ rdma-core infiniband-diags vim sudo bash-completion python sysstat autofs \
+ psmisc parted ncdu  bc procps wget less binutils htop mc curl debconf-utils rsync libtcl8.6 clustershell \
+ screen csh tmux python3-dev libncurses5 libsnmp-dev  libnl-genl-3-200 ipmitool openipmi freeipmi \
+ tigervnc-standalone-server mate-session-manager mate-desktop libhwloc15 munge  lua-bit32 \
+ lua-filesystem lua-json lua-lpeg lua-posix lua-term tcl tcl8.6 lua5.2
+
+apt -y remove modemmanager network-manager mate-power-manager-common \
+       	mate-screensaver-common mate-applets-common mate-media-common \
+       	mate-utils-common gnome-keyring gnome-keyring-pkcs11 
+
+apt -y autoremove
+
+systemctl disable apparmor.service
+systemctl set-default multi-user.target 
+ln -sv /etc/profile /etc/bashrc 
+#######################
+TARGET=/etc/network/interfaces.d/ib0
+
+IB_IP=$(ip address show eth0  | awk ' $1 == "inet" {print $2}' | awk -F/ '{print $1}'| awk -F. '{print $1"."$2+2"."$3"."$4}' )
+
+echo "
+auto ib0                
+iface ib0 inet static   
+   address $IB_IP/16
+   " | tee  $TARGET  
+
+############################
+
+echo "options ib_ipoib send_queue_size=128 recv_queue_size=128 " >> /etc/modprobe.d/ib.conf
+
+echo " 
+Host * 
+        GSSAPIAuthentication no 
+        CheckHostIP     no
+        StrictHostKeyChecking   no
+        UsePrivilegedPort       no
+        ForwardX11Trusted yes 
+        SendEnv LANG LC_* 
+" > /etc/ssh/ssh_config   
+
+echo "
+Port 22                                                    
+Protocol 2                                                 
+MaxAuthTries 3                                             
+#MaxStartups 50                                            
+PermitRootLogin yes                                        
+#without-password                                          
+LoginGraceTime 30                                          
+SyslogFacility AUTHPRIV                                    
+PasswordAuthentication yes                                 
+ChallengeResponseAuthentication no                         
+GSSAPIAuthentication no                                    
+GSSAPICleanupCredentials no                                
+UsePAM yes                                                 
+                                                           
+# Allow client to pass locale environment variables       
+AcceptEnv LANG LC_*                                        
+X11Forwarding yes                                          
+UseDNS no                                                  
+Subsystem       sftp    /usr/libexec/openssh/sftp-server  
+
+" >/etc/ssh/sshd_config
+
+if ! grep -q kernel.randomize_va_space /etc/sysctl.d/local.conf ; then
+echo "
+net.ipv4.ip_forward = 1
+kernel.randomize_va_space = 0                      
+net.ipv4.tcp_max_syn_backlog=1024
+net.ipv4.tcp_window_scaling=1
+net.ipv4.tcp_timestamps=0                          
+net.ipv4.tcp_sack=0                                
+net.core.netdev_max_backlog=250000                 
+net.core.rmem_max=104857600                         
+net.core.wmem_max=104857600                        
+net.core.rmem_default=104857600                     
+net.core.wmem_default=104857600                    
+net.core.optmem_max=104857600                    
+net.ipv4.tcp_mem=104857600 104857600 104857600        
+net.ipv4.tcp_rmem=4096 87380 104857600              
+net.ipv4.tcp_wmem=4096 65536 104857600             
+net.ipv4.tcp_low_latency=1                         
+
+">/etc/sysctl.d/local.conf 
+fi 
+
+echo "soporte ALL=(ALL)       ALL" >> /etc/sudoers.d/soporte
+chmod 0440 /etc/sudoers.d/soporte  
+echo "
+*                soft    memlock         64000000 
+*                hard    memlock         64000000 
+" >/etc/security/limits.d/memlock.conf
+echo "
+*                soft    stack         unlimited 
+*                hard    stack         unlimited
+" >/etc/security/limits.d/stack.conf
+
+echo "
+*                soft    nofile         8192 
+*                hard    nofile         8192
+" >/etc/security/limits.d/nofile.conf
+
+mkdir -pv /root/.ssh 
+chmod -v 700 /root/.ssh
+echo "
+" > /root/.ssh/authorized_keys 
+chmod -v 600 /root/.ssh/authorized_keys 
+
+>  /etc/motd
+
+
+echo "
+# Color files by types                            
+set colored-stats On                              
+# Append char to indicate type                    
+set visible-stats On                              
+# Color the common prefix                         
+set colored-completion-prefix On                  
+# Color the common prefix in menu-complete        
+set menu-complete-display-prefix On               
+                                                  
+\"\e[A\": history-search-backward                   
+\"\e[B\": history-search-forward                    
+                                                  
+set horizontal-scroll-mode off                    
+# Completion tweaks                               
+set completion-display-width -1                   
+set completion-prefix-display-length 5            
+set completion-map-case on                        
+set expand-tilde on                               
+set mark-modified-lines on                        
+                                                  
+set completion-ignore-case on                     
+set completion-map-case on                        
+set show-all-if-ambiguous on                      
+set mark-directories on                           
+set mark-symlinked-directories on                 
+set match-hidden-files on                         
+set skip-completed-text on                        
+set page-completions on                           
+set completion-query-items 50                     
+                                                  
+# Allow UTF-8 input and output                    
+set input-meta on                                 
+set output-meta on                                
+set convert-meta off                              
+                                                  
+# Bash-specific mappings and settings             
+$if Bash                                          
+  Space: magic-space                              
+  \C-w: backward-kill-word                        
+  "\C-n": menu-complete                           
+$endif                                            
+
+" > /root/.inputrc 
+
+timedatectl set-timezone America/Mexico_City 
+ln -sfv /usr/share/zoneinfo/America/Mexico_City /etc/localtime 
+
+echo "
+[Time]
+NTP=ntpdgtic.redunam.unam.mx
+" > /etc/systemd/timesyncd.conf 
+
+
