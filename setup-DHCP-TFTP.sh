@@ -106,6 +106,7 @@ dhcp-option=option:dns-server,$NETBOOT_DNS
 
 echo "#!/bin/bash 
 sudo pkill dnsmasq
+date >> $NETBOOT_ROOT/dnsmasq.cfg/.log
 sudo dnsmasq --conf-dir=$NETBOOT_ROOT/dnsmasq.cfg 
 " > $NETBOOT_ROOT/run-DNSMASQ.sh 
 
