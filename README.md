@@ -16,10 +16,14 @@ bash setup-DHCP-TFTP.sh  nodo IP MAC
 bash run-DNSMASQ.sh
 ~~~
 
+Uso de dnsmasq versión 2.86 
+https://thekelleys.org.uk/dnsmasq/dnsmasq-2.86.tar.gz
+
 
 ### Referencias
 https://www.debian.org/releases/stable/amd64/apb.es.html
 https://www.debian.org/releases/stable/amd64/ch05s03.en.html
 https://preseed.debian.net/debian-preseed/bullseye/amd64-main-full.txt
+
 man  dnsmasq
 
