@@ -3,7 +3,7 @@
 # Obligatorios
 NODE_HOSTNAME=$1
 NODE_IP=$2
-MAC=$3
+MAC=$(echo $3 | tr A-F a-f)
 
 # Variables locales no forman parte de debian installer preseed
 BOOT_FILE=pxelinux.0
@@ -52,6 +52,7 @@ include /nodes.cfg/$NODE_HOSTNAME" > $NETBOOT_ROOT/pxelinux.cfg/$NODE_HOSTNAME
 
 ln -sfv $NETBOOT_ROOT/pxelinux.cfg/$NODE_HOSTNAME  $NETBOOT_ROOT/pxelinux.cfg/01-$(echo $MAC | tr ":" "-")
 ln -sfv $NETBOOT_ROOT/pxelinux.cfg/$NODE_HOSTNAME  $NETBOOT_ROOT/pxelinux.cfg/$( printf "%02X" $(echo $NODE_IP | tr "." " " ) )
+ln -sfv $NETBOOT_ROOT/pxelinux.cfg/$NODE_HOSTNAME  $NETBOOT_ROOT/pxelinux.cfg/$NODE_IP
 test ! -e $NETBOOT_ROOT/preseed.cfg/$NODE_HOSTNAME && ln -svf $NETBOOT_ROOT/preseed.cfg/default.preseed $NETBOOT_ROOT/preseed.cfg/$NODE_HOSTNAME
 test ! -e $NETBOOT_ROOT/post.cfg/$NODE_HOSTNAME && ln -svf $NETBOOT_ROOT/post.cfg/default.post $NETBOOT_ROOT/post.cfg/$NODE_HOSTNAME
 }
